@@ -105,6 +105,8 @@ au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>r :GoRun main.go<CR>
 
 au FileType markdown nmap <leader>c :execute "!pandoc " . expand('%:t:r') . ".md -o " . expand('%:t:r') . ".pdf --template phoenix && mupdf-gl " . expand('%:t:r') . ".pdf" <Enter><Enter>
+au FileType markdown nmap <leader>cv :execute "mupdf-gl " . expand('%:t:r') . ".pdf" <Enter><Enter>
+au FileType markdown nmap <leader>cL :execute "!pandoc " . expand('%:t:r') . ".md -o " . expand('%:t:r') . ".pdf --template letter && mupdf-gl " . expand('%:t:r') . ".pdf" <Enter><Enter>
 au FileType markdown nmap <leader>cp :execute "!lpr -P HP_OfficeJet_6950 '" . % . "' && open /Users/marius/Library/Printers/AS-Drucker-Buero.app" <Enter>
 
 au FileType markdown nmap <leader>\| gaip\|<Enter>
@@ -134,37 +136,48 @@ set ffs=unix,dos,mac
 "------------------------------------------------
 call plug#begin('~/.vim/plugged')
 
+" => Utility
+Plug 'scrooloose/nerdtree'
+map <C-n> :NERDTreeToggle<CR>
+
 Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'scrooloose/nerdcommenter'
-Plug 'vim-airline/vim-airline'
 
-Plug 'lervag/vimtex'
+Plug 'vim-syntastic/syntastic'
+let g:syntastic_go_checkers = ['golint']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=2 shiftwidth=2
-let g:go_fmt_command = "goimports"
+" => Markdown / Writing stuff
+Plug 'reedes/vim-pencil'
+let g:pencil#textwidth = 80
+let g:airline_section_x = '%{PencilMode()}'
+let g:pencil#autoformat_config = {
+  \   'markdown': {
+  \     'black': [
+  \       'htmlH[0-9]',
+  \       'markdown(Code|H[0-9]|Url|IdDeclaration|Link|Rule|Highlight[A-Za-z0-9]+)',
+  \       'markdown(FencedCodeBlock|InlineCode)',
+  \       'mkd(Code|Rule|Delimiter|Link|ListItem|IndentCode)',
+  \       'mmdTable[A-Za-z0-9]*',
+  \     ]
+  \   },
+  \ }
 
+Plug 'mattly/vim-markdown-enhancements'
 
-"if empty(v:servername) && exists('*remote_startserver')
-  "call remote_startserver('VIM')
-"endif
+Plug 'junegunn/vim-easy-align'
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
-let g:vimtex_view_general_viewer='mupdf-gl'
-let g:tex_flavor = "latex"
-
-" Track the engine.
 Plug 'SirVer/ultisnips'
-
-" Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-" If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 
@@ -173,30 +186,35 @@ if has('python3')
   silent! python3 1
 endif
 
-Plug 'joonty/vim-do'
+" => Editor
+Plug 'tpope/vim-surround'
 
-Plug 'junegunn/vim-easy-align'
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-Plug 'leafgarland/typescript-vim'
-
-Plug 'vim-airline/vim-airline-themes'
-
-Plug 'sonph/onehalf', {'rtp': 'vim'}
-colorscheme onehalflight
-let g:airline_theme='onehalfdark'
+Plug 'alvan/vim-closetag'
 
 Plug 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_enable_on_vim_startup = 1
 
-Plug 'tpope/vim-surround'
+" => Version control
+Plug 'tpope/vim-fugitive'
 
-Plug 'alvan/vim-closetag'
+" => Language support
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=2 shiftwidth=2
+let g:go_fmt_command = "goimports"
+
+Plug 'leafgarland/typescript-vim'
+
+Plug 'lervag/vimtex'
+let g:vimtex_view_general_viewer='mupdf-gl'
+let g:tex_flavor = "latex"
+
+" => User Interface
+Plug 'sonph/onehalf', {'rtp': 'vim'}
+colorscheme onehalflight
+let g:airline_theme='onehalfdark'
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
