@@ -1,0 +1,35 @@
+# enter fullscreen mode for the focused container
+alt - f : yabai -m window --toggle zoom-fullscreen
+
+# change focus between tiling / floating windows
+shift + alt - space : yabai -m window --toggle float
+
+# change layout of desktop
+alt - e : chunkc tiling::desktop --layout bsp
+#alt - s : chunkc tiling::desktop --layout monocle
+
+# kill focused window
+shift + alt - q : chunkc tiling::window --close
+
+# change focused window
+alt - h : yabai -m window --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
+
+# rotate window tree
+alt - r : yabai -m space --rotate 90
+
+# x-mirror window tree (")
+# TODO: This does not work, yet
+#shift - alt - ' : yabai -m space --mirror x-axis
+
+# y-mirror window tree (%)
+alt - 5 : yabai -m space --mirror y-axis
+
+alt - w: open /Applications/WhatsApp.app
+alt - m: open /Applications/Messages.app
+alt - s: open /Applications/Spotify.app
+alt - i: osascript ~/Projekte/Scripts/open_new_iterm.scpt
+alt - d: osascript ~/Projekte/Scripts/open_new_finder.scpt
+
