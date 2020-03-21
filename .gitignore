@@ -1,3 +1,5 @@
 .config/nvim/spell/*.spl
 # contains history of the netrw plugin (possible confidential data)
 .config/nvim/.netrwhist
+.config/nvm/
+.config/karabiner/automatic_backups/
