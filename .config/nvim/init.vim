@@ -97,19 +97,41 @@ augroup numbertoggle
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
 augroup END
 
-map C y$
+map Y y$
 map D d$
 map Cl 0y$
 
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>r :GoRun main.go<CR>
+" Enable folds based on syntax
+set foldmethod=syntax
+" Unfold all folds in new buffers
+au BufWinEnter * normal zR
 
-au FileType markdown nmap <leader>c :execute "!pandoc " . expand('%:t:r') . ".md -o " . expand('%:t:r') . ".pdf --template phoenix && mupdf-gl " . expand('%:t:r') . ".pdf" <Enter><Enter>
-au FileType markdown nmap <leader>cv :execute "mupdf-gl " . expand('%:t:r') . ".pdf" <Enter><Enter>
+au FileType go nmap <leader>b <Plug>(go-build)
+"au FileType go nmap <leader>r :GoRun main.go<CR>
+au FileType go nmap <leader>r <Plug>(go-run)
+
+au FileType markdown nmap <leader>c :execute "!pandoc " . expand('%:t:r') . ".md -o " . expand('%:t:r') . ".pdf --template phoenix && zathura " . expand('%:t:r') . ".pdf" <Enter><Enter>
+au FileType markdown nmap <leader>cv :execute "zathura " . expand('%:t:r') . ".pdf" <Enter><Enter>
 au FileType markdown nmap <leader>cL :execute "!pandoc " . expand('%:t:r') . ".md -o " . expand('%:t:r') . ".pdf --template letter && mupdf-gl " . expand('%:t:r') . ".pdf" <Enter><Enter>
 au FileType markdown nmap <leader>cp :execute "!lpr -P HP_OfficeJet_6950 '" . % . "' && open /Users/marius/Library/Printers/AS-Drucker-Buero.app" <Enter>
 
 au FileType markdown nmap <leader>\| gaip\|<Enter>
+
+map <leader>of :execute "!open ."<ENTER><ENTER>
+
+" Map ESC to exit of terminal mode
+tnoremap <Esc> <C-\><C-n>
+
+" Easier help movements
+"nnoremap <buffer> <CR> <C-]>
+"nnoremap <buffer> <BS> <C-T>
+"nnoremap <buffer> o /'\l\{2,\}'<CR>
+"nnoremap <buffer> O ?'\l\{2,\}'<CR>
+"nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
+"nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
+
+nmap <leader>ve :tabe ~/.config/nvim/init.vim<Enter>
+nmap <leader>vr :so ~/.config/nvim/init.vim<Enter>
 
 "------------------------------------------------
 " TEXT
@@ -139,35 +161,41 @@ call plug#begin('~/.vim/plugged')
 " => Utility
 Plug 'scrooloose/nerdtree'
 map <C-n> :NERDTreeToggle<CR>
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*,*.acn,*.aux,*.bbl,*.bcf,*.blg,*.fdb_latexmk,*.fls,*.glo,*.ist,*.lof,*.lol,*.lot,*.run.xml,*.synctex.gz,*.toc
+let NERDTreeRespectWildIgnore=1
 
 Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'scrooloose/nerdcommenter'
 
 Plug 'vim-syntastic/syntastic'
+let g:syntastic_tex_checkers = ['']
 let g:syntastic_go_checkers = ['golint']
+let g:syntastic_javascript_checkers = ['standard']
+let g:syntastic_javascript_standard_generic = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 " => Markdown / Writing stuff
-Plug 'reedes/vim-pencil'
-let g:pencil#textwidth = 80
-let g:airline_section_x = '%{PencilMode()}'
-let g:pencil#autoformat_config = {
-  \   'markdown': {
-  \     'black': [
-  \       'htmlH[0-9]',
-  \       'markdown(Code|H[0-9]|Url|IdDeclaration|Link|Rule|Highlight[A-Za-z0-9]+)',
-  \       'markdown(FencedCodeBlock|InlineCode)',
-  \       'mkd(Code|Rule|Delimiter|Link|ListItem|IndentCode)',
-  \       'mmdTable[A-Za-z0-9]*',
-  \     ]
-  \   },
-  \ }
-
 Plug 'mattly/vim-markdown-enhancements'
+
+Plug 'w0rp/ale'
+let g:ale_linters = {
+            \   'mail': ['proselint'],
+            \   'markdown': ['proselint'],
+            \   'text': ['proselint'],
+            \   'latex': ['proselint'],
+            \   }
+let g:ale_fixers = [
+            \   'trim_whitespace',
+            \]
+let g:ale_sign_warning = '⚠'
+let g:ale_sign_error = '⨉'
 
 Plug 'junegunn/vim-easy-align'
 xmap ga <Plug>(EasyAlign)
@@ -196,25 +224,78 @@ let g:indent_guides_enable_on_vim_startup = 1
 
 " => Version control
 Plug 'tpope/vim-fugitive'
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gr :Gpush<CR>
 
 " => Language support
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=2 shiftwidth=2
 let g:go_fmt_command = "goimports"
+let g:go_term_enabled = 1
+let g:go_term_mode = "split"
+let g:go_term_height = 13
+let g:go_fmt_command = "goimports"
 
 Plug 'leafgarland/typescript-vim'
 
+" => LaTeX support
 Plug 'lervag/vimtex'
-let g:vimtex_view_general_viewer='mupdf-gl'
+let g:vimtex_view_general_viewer='zathura'
+let g:vimtex_fold_enabled = 0
+let g:vimtex_view_method = "zathura"
+let g:vimtex_view_zathura_hook_callback = 'ZathuraReloadOnCompile'
+"function! ZathuraReloadOnCompile() dict
+  "call self.xwin_send_keys('R')
+"endfunction
+let g:vimtex_compiler_latexmk = {
+    \ 'options' : [
+    \   '-pdf',
+    \   '-pdflatex="pdflatex --shell-escape %O %S"',
+    \   '-verbose',
+    \   '-file-line-error',
+    \   '-synctex=1',
+    \   '-interaction=nonstopmode',
+    \ ]
+    \}
 let g:tex_flavor = "latex"
 
 " => User Interface
-Plug 'sonph/onehalf', {'rtp': 'vim'}
-colorscheme onehalflight
-let g:airline_theme='onehalfdark'
+Plug 'NLKNguyen/papercolor-theme'
+set t_Co=256
+set background=light
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default': {
+  \       'allow_bold': 1,
+  \       'allow_italic': 1
+  \     }
+  \   }
+  \ }
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+let g:airline_theme='papercolor'
+
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
+nnoremap <leader>fa :FlutterRun<cr>
+nnoremap <leader>fq :FlutterQuit<cr>
+nnoremap <leader>fr :FlutterHotReload<cr>
+nnoremap <leader>fR :FlutterHotRestart<cr>
+
+Plug 'rodjek/vim-puppet'
+
+Plug 'liuchengxu/vista.vim'
+
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug '/usr/local/opt/fzf'
+
+Plug 'Chiel92/vim-autoformat'
+
+Plug 'davewongillies/vim-eyaml'
+
+Plug 'tpope/vim-jdaddy'
 
 call plug#end()
 
+colorscheme PaperColor
