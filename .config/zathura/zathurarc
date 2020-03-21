@@ -1,0 +1,4 @@
+set selection-clipboard clipboard
+set font "monospace normal 14"
+set window-height 910
+set window-width 1110
