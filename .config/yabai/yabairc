@@ -1,42 +1,39 @@
 # Layout
 yabai -m config layout bsp
 
+# Mouse
+yabai -m config mouse_modifier fn
+
 # Spacing
-yabai -m config top_padding    5
-yabai -m config bottom_padding 5
-yabai -m config left_padding   5
-yabai -m config right_padding  5
-yabai -m config window_gap     5
+yabai -m config top_padding    15
+yabai -m config bottom_padding 15
+yabai -m config left_padding   15
+yabai -m config right_padding  15
+yabai -m config window_gap     15
 
 # Transparency
 yabai -m config window_opacity on
 yabai -m config active_window_opacity 1.0
 yabai -m config normal_window_opacity 0.9
 
-# Config Bar
-# TODO: So far only copied from the yabai doc - should be customized
-yabai -m config status_bar                   on
-yabai -m config status_bar_text_font         "Helvetica Neue:Bold:12.0"
-yabai -m config status_bar_icon_font         "FontAwesome:Regular:12.0"
-yabai -m config status_bar_background_color  0xff202020
-yabai -m config status_bar_foreground_color  0xffa8a8a8
-yabai -m config status_bar_space_icon_strip  I II III IV V VI VII VIII IX X
-yabai -m config status_bar_power_icon_strip   
-yabai -m config status_bar_space_icon        
-yabai -m config status_bar_clock_icon        
+# Status bar
+yabai -m config status_bar                   off
 
 # Window rules
 yabai -m rule --add app="^Finder$"               manage=off
 yabai -m rule --add app="^Fantastical$"          manage=off
 yabai -m rule --add app="^App Store$"            manage=off
 yabai -m rule --add app="^WhatsApp$"             manage=off grid=5:10:3:0:7:4
-yabai -m rule --add app="^Nachrichten$"          manage=off grid=5:2:3:0:7:3
 yabai -m rule --add app="^Microsoft PowerPoint$" manage=off
+yabai -m rule --add app="^Microsoft Outlook$"    manage=off
 yabai -m rule --add app="^Microsoft Teams$"      manage=off grid=5:10:3:0:7:4
+yabai -m rule --add app="^Slack$"                manage=off grid=5:10:3:0:7:4
 yabai -m rule --add app="^Notion$"               manage=off
 yabai -m rule --add app="^yEd$"                  manage=off
-yabai -m rule --add app="^Systemeinstellungen$"  manage=off
 yabai -m rule --add app="^Alfred Preferences$"   manage=off
 yabai -m rule --add app="^Affinity Designer$"    manage=off
 yabai -m rule --add app="^Things$"               manage=off grid=5:2:0:0:0:3
 yabai -m rule --add app="^Spotify$"              manage=off grid=2:3:0:0:2:2
+yabai -m rule --add app="^Nachrichten|Messages$" manage=off grid=5:2:3:0:7:3
+yabai -m rule --add app="^Airmail$"              manage=off
+yabai -m rule --add app="^Systemeinstellungen|System Preferences$"  manage=off
