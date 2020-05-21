@@ -92,3 +92,9 @@ end
 # TODO: I should remove this at some point when all local packages are moved to
 # Nix
 set -x PATH $PATH $HOME/Library/Python/3.7/bin
+
+# Load foreign-env plugin (part of oh-my-fish) to wrap nix daemon script
+set fish_function_path $fish_function_path $HOME/.config/fish/external_functions/foreign-env/functions
+
+# Wrap nix daemon loader
+fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
