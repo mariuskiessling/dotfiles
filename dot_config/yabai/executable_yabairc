@@ -1,8 +1,12 @@
+# Inject SA
+sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
 # Layout
 yabai -m config layout bsp
 
 # Mouse
-yabai -m config mouse_modifier fn
+yabai -m config mouse_modifier ctrl
 
 # Spacing
 yabai -m config top_padding    15
@@ -12,12 +16,11 @@ yabai -m config right_padding  15
 yabai -m config window_gap     15
 
 # Transparency
-yabai -m config window_opacity on
-yabai -m config active_window_opacity 1.0
-yabai -m config normal_window_opacity 0.9
-
-# Status bar
-yabai -m config status_bar                   off
+# Window opacity has to be disabled until the bug in yabai for macOS Catalina
+# is resolved: https://github.com/koekeishiya/yabai/issues/275
+yabai -m config window_opacity off
+#yabai -m config active_window_opacity 1.0
+#yabai -m config normal_window_opacity 0.9
 
 # Window rules
 yabai -m rule --add app="^Finder$"               manage=off
@@ -26,7 +29,8 @@ yabai -m rule --add app="^App Store$"            manage=off
 yabai -m rule --add app="^WhatsApp$"             manage=off grid=5:10:3:0:7:4
 yabai -m rule --add app="^Microsoft PowerPoint$" manage=off
 yabai -m rule --add app="^Microsoft Outlook$"    manage=off
-yabai -m rule --add app="^Microsoft Teams$"      manage=off grid=5:10:3:0:7:4
+yabai -m rule --add app="^Microsoft Teams$"      manage=off grid=25:10:3:0:7:20
+yabai -m rule --add app="^Discord$"              manage=off grid=25:10:3:1:7:20
 yabai -m rule --add app="^Slack$"                manage=off grid=5:10:3:0:7:4
 yabai -m rule --add app="^Notion$"               manage=off
 yabai -m rule --add app="^yEd$"                  manage=off
@@ -34,6 +38,14 @@ yabai -m rule --add app="^Alfred Preferences$"   manage=off
 yabai -m rule --add app="^Affinity Designer$"    manage=off
 yabai -m rule --add app="^Things$"               manage=off grid=5:2:0:0:0:3
 yabai -m rule --add app="^Spotify$"              manage=off grid=2:3:0:0:2:2
+yabai -m rule --add app="^Music$"                manage=off grid=2:3:0:0:2:2
 yabai -m rule --add app="^Nachrichten|Messages$" manage=off grid=5:2:3:0:7:3
+yabai -m rule --add app="^Signal$"               manage=off grid=5:2:3:0:7:3
 yabai -m rule --add app="^Airmail$"              manage=off
 yabai -m rule --add app="^Systemeinstellungen|System Preferences$"  manage=off
+yabai -m rule --add app="^DBeaver$"              manage=off
+yabai -m rule --add app="^MacPass$"              manage=off
+yabai -m rule --add title="^Quick Look$"         manage=off
+yabai -m rule --add app="^Stickies$"             manage=off
+yabai -m rule --add app="^Calculator$"           manage=off
+yabai -m rule --add app="^MQTT Explorer$"        manage=off

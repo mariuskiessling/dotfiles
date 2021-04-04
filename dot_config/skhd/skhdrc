@@ -31,8 +31,10 @@ alt - r : yabai -m space --rotate 90
 # y-mirror window tree (%)
 alt - 5 : yabai -m space --mirror y-axis
 
+alt - t : yabai -m window --toggle sticky;\
+          yabai -m window --toggle topmost;\
+
 alt - w: open /Applications/WhatsApp.app
-alt - m: open /Applications/Messages.app
+alt - m: open /System/Applications/Messages.app
 alt - i: osascript ~/Projekte/Scripts/open_new_iterm.scpt
 alt - d: osascript ~/Projekte/Scripts/open_new_finder.scpt
-

@@ -132,6 +132,8 @@ tnoremap <Esc> <C-\><C-n>
 
 nmap <leader>ve :tabe ~/.config/nvim/init.vim<Enter>
 nmap <leader>vr :so ~/.config/nvim/init.vim<Enter>
+nmap <silent> <leader>an :ALENext<cr>
+nmap <silent> <leader>ap :ALEPrevious<cr>
 
 "------------------------------------------------
 " TEXT
@@ -152,6 +154,9 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
+autocmd FileType typescript setlocal expandtab shiftwidth=4 softtabstop=4
+autocmd FileType html setlocal expandtab shiftwidth=4 softtabstop=4
+autocmd FileType scss setlocal expandtab shiftwidth=4 softtabstop=4
 
 "------------------------------------------------
 " Plugins
@@ -167,7 +172,9 @@ let NERDTreeDirArrows = 1
 set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*,*.acn,*.aux,*.bbl,*.bcf,*.blg,*.fdb_latexmk,*.fls,*.glo,*.ist,*.lof,*.lol,*.lot,*.run.xml,*.synctex.gz,*.toc
 let NERDTreeRespectWildIgnore=1
 
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+nnoremap <C-p> :<C-u>Clap files<CR>
 
 Plug 'scrooloose/nerdcommenter'
 
@@ -190,6 +197,7 @@ let g:ale_linters = {
             \   'markdown': ['proselint'],
             \   'text': ['proselint'],
             \   'latex': ['proselint'],
+            \   'go': ['gopls'],
             \   }
 let g:ale_fixers = [
             \   'trim_whitespace',
@@ -235,6 +243,8 @@ let g:go_term_enabled = 1
 let g:go_term_mode = "split"
 let g:go_term_height = 13
 let g:go_fmt_command = "goimports"
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 Plug 'leafgarland/typescript-vim'
 
@@ -287,7 +297,7 @@ Plug 'rodjek/vim-puppet'
 
 Plug 'liuchengxu/vista.vim'
 
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug '/usr/local/opt/fzf'
 
 Plug 'Chiel92/vim-autoformat'
@@ -295,6 +305,16 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'davewongillies/vim-eyaml'
 
 Plug 'tpope/vim-jdaddy'
+
+Plug 'habamax/vim-asciidoctor'
+
+Plug 'godlygeek/tabular'
+
+Plug 'jodosha/vim-godebug'
+
+Plug 'posva/vim-vue'
+
+Plug 'rhysd/vim-go-impl'
 
 call plug#end()
 

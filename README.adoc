@@ -1,0 +1,8 @@
+:important-caption: :heavy_exclamation_mark:
+
+= dotfiles
+
+IMPORTANT: The dotfiles in this repository use https://www.chezmoi.io[chezmoi]
+for templating. Special filename prefixes such as `dot_`, `empty_` and
+`private_` are chezmoi-specific. Check out
+https://www.chezmoi.io/docs[chezmoi's documentation] for more details.

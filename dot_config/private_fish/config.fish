@@ -10,6 +10,9 @@ alias k='kubectl'
 alias ks='kubectl -n kube-system'
 alias gr='grep -R'
 alias dotgit='/usr/bin/git --git-dir=$HOME/Projects/dotfiles/.git --work-tree=$HOME/'
+function ka
+  kubectl $argv --all-namespaces
+end
 
 # Setup up SSH agent
 # Mostly taken from https://gist.github.com/gerbsen/5fd8aa0fde87ac7a2cae
@@ -17,9 +20,8 @@ alias dotgit='/usr/bin/git --git-dir=$HOME/Projects/dotfiles/.git --work-tree=$H
 setenv SSH_ENV $HOME/.ssh/environment
 
 function start_agent
-    echo "Initializing new SSH agent ..."
+    echo "Starting new SSH agent..."
     ssh-agent -c | sed 's/^echo/#echo/' > $SSH_ENV
-    echo "succeeded"
     chmod 600 $SSH_ENV 
     . $SSH_ENV > /dev/null
     ssh-add
@@ -98,3 +100,16 @@ set fish_function_path $fish_function_path $HOME/.config/fish/external_functions
 
 # Wrap nix daemon loader
 fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+set -x PATH $PATH $HOME/go/bin
+set -x -U GOPATH $HOME/go
+set -gx PATH $PATH $HOME/.krew/bin
+
+set -g fish_user_paths "/usr/local/opt/libpq/bin" $fish_user_paths
+
+# Google Cloud SDK
+set -g -x "CLOUDSDK_PYTHON" "/usr/local/opt/python@3.8/libexec/bin/python"
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
+fenv source "/Users/marius.kiessling/.sdkman/bin/sdkman-init.sh"
+
+# go version manager
+set -gx GOPATH $HOME/go; set -gx GOROOT $HOME/.go; set -gx PATH $GOPATH/bin $PATH;
