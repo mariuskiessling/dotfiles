@@ -1,0 +1,21 @@
+{{- if (eq .chezmoi.hostname "granger") -}}
+IdentityFile ~/.ssh/id_metro
+{{- end }}
+# The old RSA key (same name, different file) is used both on the personal and
+# work computer.
+IdentityFile ~/.ssh/id_rsa
+IdentityFile ~/.ssh/id_personal
+
+{{ if (eq .chezmoi.hostname "granger") }}
+# Work-based hosts might change their SSH keys relatively often.
+Host *.mcdrwork0.peng.*.metroscales.io
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+  LogLevel ERROR
+  User root
+
+Host *.metroscales.io
+  LogLevel ERROR
+  User root
+{{- end -}}
+
