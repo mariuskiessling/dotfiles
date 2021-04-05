@@ -6,3 +6,11 @@ IMPORTANT: The dotfiles in this repository use https://www.chezmoi.io[chezmoi]
 for templating. Special filename prefixes such as `dot_`, `empty_` and
 `private_` are chezmoi-specific. Check out
 https://www.chezmoi.io/docs[chezmoi's documentation] for more details.
+
+=== Notes
+
+* My work computer's hostname is `granger`. All conditional templates based on
+  this hostname are only rendered on my work machine.
+* Some files are encrypted because they must not be shared outside the context
+  of my employer.
+* All my machines that are served by this repository run macOS.
