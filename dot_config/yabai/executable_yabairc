@@ -49,3 +49,4 @@ yabai -m rule --add title="^Quick Look$"         manage=off
 yabai -m rule --add app="^Stickies$"             manage=off
 yabai -m rule --add app="^Calculator$"           manage=off
 yabai -m rule --add app="^MQTT Explorer$"        manage=off
+yabai -m rule --add app="^Keybase$"              manage=off
