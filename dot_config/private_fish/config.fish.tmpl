@@ -24,17 +24,26 @@ function start_agent
     ssh-agent -c | sed 's/^echo/#echo/' > $SSH_ENV
     chmod 600 $SSH_ENV 
     . $SSH_ENV > /dev/null
-    ssh-add
+    load_identities
 end
 
 function test_identities 
     ssh-add -l | grep "The agent has no identities" > /dev/null
     if [ $status -eq 0 ]
-        ssh-add
+        load_identities
         if [ $status -eq 2 ]
             start_agent
         end
     end
+end
+
+function load_identities
+  {{- if (eq .chezmoi.hostname "granger") }}
+  ssh-add ~/.ssh/id_metro
+  ssh-add ~/.ssh/id_metro_rsa
+  {{- end }}
+
+  ssh-add ~/.ssh/id_personal
 end
 
 # We should not run the SSH agent setup while we are running in a Nix shell as
