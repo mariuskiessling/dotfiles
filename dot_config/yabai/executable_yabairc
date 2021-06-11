@@ -43,10 +43,12 @@ yabai -m rule --add app="^Nachrichten|Messages$" manage=off grid=5:2:3:0:7:3
 yabai -m rule --add app="^Signal$"               manage=off grid=5:2:3:0:7:3
 yabai -m rule --add app="^Airmail$"              manage=off
 yabai -m rule --add app="^Systemeinstellungen|System Preferences$"  manage=off
-yabai -m rule --add app="^DBeaver$"              manage=off
+yabai -m rule --add app="^DBeaver"               manage=off
 yabai -m rule --add app="^MacPass$"              manage=off
 yabai -m rule --add title="^Quick Look$"         manage=off
 yabai -m rule --add app="^Stickies$"             manage=off
 yabai -m rule --add app="^Calculator$"           manage=off
 yabai -m rule --add app="^MQTT Explorer$"        manage=off
 yabai -m rule --add app="^Keybase$"              manage=off
+yabai -m rule --add app="^Craft$"                manage=off
+yabai -m rule --add app="^Activity Monitor$"     manage=off
