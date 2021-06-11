@@ -9,7 +9,6 @@ setenv LC_ALL en_US.UTF-8
 alias k='kubectl'
 alias ks='kubectl -n kube-system'
 alias gr='grep -R'
-alias dotgit='/usr/bin/git --git-dir=$HOME/Projects/dotfiles/.git --work-tree=$HOME/'
 function ka
   kubectl $argv --all-namespaces
 end
