@@ -298,6 +298,17 @@ Plug 'rodjek/vim-puppet'
 Plug 'liuchengxu/vista.vim'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_global_extensions = [
+  \'coc-tailwindcss',
+  \'coc-git',
+  \'coc-snippets',
+  \'coc-yaml',
+  \'coc-vetur',
+  \'coc-tsserver',
+  \'coc-css',
+  \'coc-angular'
+  \]
+
 Plug '/usr/local/opt/fzf'
 
 Plug 'Chiel92/vim-autoformat'
