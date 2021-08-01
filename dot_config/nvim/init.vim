@@ -316,6 +316,8 @@ Plug 'posva/vim-vue'
 
 Plug 'rhysd/vim-go-impl'
 
+Plug 'hashivim/vim-terraform'
+let g:terraform_fmt_on_save=1
 call plug#end()
 
 colorscheme PaperColor
