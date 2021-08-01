@@ -11,5 +11,8 @@
       "filetypes": ["terraform"],
       "initializationOptions": {}
     }
+  },
+  "yaml.schemas": {
+    "kubernetes": "/*.yaml"
   }
 }
