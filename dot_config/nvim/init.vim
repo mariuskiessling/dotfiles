@@ -333,6 +333,11 @@ let g:terraform_fmt_on_save=1
 
 Plug 'dag/vim-fish'
 
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+let g:mkdp_preview_options = {
+      \ 'sequence_diagrams': {'theme': 'simple'}
+      \ }
+
 call plug#end()
 
 colorscheme PaperColor
