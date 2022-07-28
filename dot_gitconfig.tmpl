@@ -1,0 +1,20 @@
+# TODO: This file should be templated to support the
+# personal Git identity as well. In addition, I should switch
+# from GPG to age for signing commits.
+
+[user]
+	name = Marius Kießling
+	email = marius.kiessling@metro.digital
+	signingkey = 82DB518E
+[core]
+	ignorecase = true
+	editor = /usr/local/bin/nvim
+	sshCommand = /usr/local/bin/gitsis
+[gpg]
+	program = /usr/local/bin/gpg
+[commit]
+	gpgsign = true
+[init]
+	defaultBranch = main
+[url "git@github.com:"]
+	insteadOf = https://github.com/
