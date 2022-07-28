@@ -49,25 +49,21 @@ function load_identities
   ssh-add ~/.ssh/id_personal
 end
 
-# We should not run the SSH agent setup while we are running in a Nix shell as
-# it could be a pure shell with no SSH binaries
-if test -z "$IN_NIX_SHELL"
-  if [ -n "$SSH_AGENT_PID" ] 
-      ps -ef | grep $SSH_AGENT_PID | grep ssh-agent > /dev/null
-      if [ $status -eq 0 ]
-          test_identities
-      end  
-  else
-      if [ -f $SSH_ENV ]
-          . $SSH_ENV > /dev/null
-      end  
-      ps -ef | grep $SSH_AGENT_PID | grep -v grep | grep ssh-agent > /dev/null
-      if [ $status -eq 0 ]
-          test_identities
-      else 
-          start_agent
-      end  
-  end
+if [ -n "$SSH_AGENT_PID" ] 
+    ps -ef | grep $SSH_AGENT_PID | grep ssh-agent > /dev/null
+    if [ $status -eq 0 ]
+        test_identities
+    end  
+else
+    if [ -f $SSH_ENV ]
+        . $SSH_ENV > /dev/null
+    end  
+    ps -ef | grep $SSH_AGENT_PID | grep -v grep | grep ssh-agent > /dev/null
+    if [ $status -eq 0 ]
+        test_identities
+    else 
+        start_agent
+    end  
 end
 
 # Setup the prompt configuration
@@ -83,12 +79,6 @@ function prompt_comp_git_branch
   end
 end
 
-function prompt_comp_nix_shell
-  if test -n "$IN_NIX_SHELL"
-    echo (set_color blue)" ❆ "(set_color normal)
-  end
-end
-
 function prompt_comp_pwd
   # prompt_pwd is a built-in fish function
   echo (set_color green)(prompt_pwd)(set_color normal)
@@ -97,21 +87,15 @@ end
 function fish_prompt
   set -l git_dir (git rev-parse --git-dir 2> /dev/null)
   if test -n "$git_dir"
-    printf '%s %s%s> ' (prompt_comp_pwd) (prompt_comp_git_branch) (prompt_comp_nix_shell)
+    printf '%s %s%s> ' (prompt_comp_pwd) (prompt_comp_git_branch)
   else
-    printf '%s%s> ' (prompt_comp_pwd) (prompt_comp_nix_shell)
+    printf '%s%s> ' (prompt_comp_pwd)
   end
 end
 
-# TODO: I should remove this at some point when all local packages are moved to
-# Nix
-set -x PATH $PATH $HOME/Library/Python/3.7/bin
-
-# Load foreign-env plugin (part of oh-my-fish) to wrap nix daemon script
 set fish_function_path $fish_function_path $HOME/.config/fish/external_functions/foreign-env/functions
 
-# Wrap nix daemon loader
-fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+set -x PATH $PATH $HOME/Library/Python/3.7/bin
 set -x PATH $PATH $HOME/go/bin
 set -x -U GOPATH $HOME/go
 set -gx PATH $PATH $HOME/.krew/bin
