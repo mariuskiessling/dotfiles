@@ -171,6 +171,7 @@ let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*,*.acn,*.aux,*.bbl,*.bcf,*.blg,*.fdb_latexmk,*.fls,*.glo,*.ist,*.lof,*.lol,*.lot,*.run.xml,*.synctex.gz,*.toc
 let NERDTreeRespectWildIgnore=1
+let NERDTreeShowHidden=1
 
 "Plug 'ctrlpvim/ctrlp.vim'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
