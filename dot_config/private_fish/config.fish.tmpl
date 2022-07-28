@@ -106,3 +106,6 @@ source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.
 set -gx GOPATH $HOME/go; set -gx GOROOT $HOME/.go; set -gx PATH $GOPATH/bin $PATH;
 
 set -gx GPG_TTY (tty)
+
+zoxide init fish | source
+direnv hook fish | source
