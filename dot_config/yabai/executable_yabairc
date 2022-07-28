@@ -52,3 +52,10 @@ yabai -m rule --add app="^MQTT Explorer$"        manage=off
 yabai -m rule --add app="^Keybase$"              manage=off
 yabai -m rule --add app="^Craft$"                manage=off
 yabai -m rule --add app="^Activity Monitor$"     manage=off
+yabai -m rule --add app="^Outbank$"              manage=off
+yabai -m rule --add app="^Tweetbot$"             manage=off
+
+# The new version of the DisplayLink user agent spawns a technically visible
+# but practically invisible window that would take up tiling space if it were
+# not for this rule.
+yabai -m rule --add app="^DisplayLinkUserAgent$" manage=off
