@@ -1,2 +1,6 @@
 cd:
   command: fish
+encryption: age
+age:
+  identity: ~/.ssh/id_personal
+  recipientsFile: ~/.ssh/id_personal.pub
