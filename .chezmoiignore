@@ -1,3 +1,8 @@
 README.adoc
 .DS_Store
 .aws/credentials
+# Let's try not to leak stuff through the history file.
+.bash_history
+# This file contains credentials needed by the boto library, used by
+# gsutil.
+.boto
