@@ -12,7 +12,11 @@
       "initializationOptions": {}
     }
   },
+  "yaml.schemaStore.enable": true,
   "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.yml",
+    "https://json.schemastore.org/kustomization.json": "kustomization.yaml",
+    "https://json.schemastore.org/taskfile.json": "Taskfile.yaml",
     "kubernetes": "/*.yaml"
   }
 }
