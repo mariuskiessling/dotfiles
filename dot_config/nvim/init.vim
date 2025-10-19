@@ -141,11 +141,6 @@ nmap <silent> <leader>ap :ALEPrevious<cr>
 " Enable syntax highlighting
 syntax enable
 
-" Enable 256 colors palette in Gnome Terminal
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
-
 set background=light
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -157,6 +152,8 @@ set ffs=unix,dos,mac
 autocmd FileType typescript setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType html setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType scss setlocal expandtab shiftwidth=4 softtabstop=4
+
+vmap <silent> u <esc>:Gdiff<cr>gv:diffget<cr><c-w><c-w>ZZ
 
 "------------------------------------------------
 " Plugins
@@ -173,21 +170,10 @@ set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*,*.ac
 let NERDTreeRespectWildIgnore=1
 let NERDTreeShowHidden=1
 
-"Plug 'ctrlpvim/ctrlp.vim'
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 nnoremap <C-p> :<C-u>Clap files<CR>
 
 Plug 'scrooloose/nerdcommenter'
-
-Plug 'vim-syntastic/syntastic'
-let g:syntastic_tex_checkers = ['']
-let g:syntastic_go_checkers = ['golint']
-let g:syntastic_javascript_checkers = ['standard']
-let g:syntastic_javascript_standard_generic = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 " => Markdown / Writing stuff
 Plug 'mattly/vim-markdown-enhancements'
@@ -246,33 +232,12 @@ let g:go_term_height = 13
 let g:go_fmt_command = "goimports"
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
+nnoremap <silent> gv :vsplit<CR>gd
 
 Plug 'leafgarland/typescript-vim'
 
-" => LaTeX support
-Plug 'lervag/vimtex'
-let g:vimtex_view_general_viewer='zathura'
-let g:vimtex_fold_enabled = 0
-let g:vimtex_view_method = "zathura"
-let g:vimtex_view_zathura_hook_callback = 'ZathuraReloadOnCompile'
-"function! ZathuraReloadOnCompile() dict
-  "call self.xwin_send_keys('R')
-"endfunction
-let g:vimtex_compiler_latexmk = {
-    \ 'options' : [
-    \   '-pdf',
-    \   '-pdflatex="pdflatex --shell-escape %O %S"',
-    \   '-verbose',
-    \   '-file-line-error',
-    \   '-synctex=1',
-    \   '-interaction=nonstopmode',
-    \ ]
-    \}
-let g:tex_flavor = "latex"
-
 " => User Interface
 Plug 'NLKNguyen/papercolor-theme'
-set t_Co=256
 set background=light
 let g:PaperColor_Theme_Options = {
   \   'theme': {
@@ -286,15 +251,6 @@ let g:PaperColor_Theme_Options = {
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme='papercolor'
-
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'thosakwe/vim-flutter'
-nnoremap <leader>fa :FlutterRun<cr>
-nnoremap <leader>fq :FlutterQuit<cr>
-nnoremap <leader>fr :FlutterHotReload<cr>
-nnoremap <leader>fR :FlutterHotRestart<cr>
-
-Plug 'rodjek/vim-puppet'
 
 Plug 'liuchengxu/vista.vim'
 
@@ -310,11 +266,12 @@ let g:coc_global_extensions = [
   \'coc-angular'
   \]
 
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 Plug '/usr/local/opt/fzf'
 
 Plug 'Chiel92/vim-autoformat'
-
-Plug 'davewongillies/vim-eyaml'
 
 Plug 'tpope/vim-jdaddy'
 
@@ -324,12 +281,11 @@ Plug 'godlygeek/tabular'
 
 Plug 'jodosha/vim-godebug'
 
-Plug 'posva/vim-vue'
-
 Plug 'rhysd/vim-go-impl'
 
-Plug 'hashivim/vim-terraform'
-let g:terraform_fmt_on_save=1
+"Plug 'hashivim/vim-terraform'
+"let g:terraform_fmt_on_save=1
+"let g:terraform_align=1
 
 Plug 'dag/vim-fish'
 
@@ -338,6 +294,26 @@ let g:mkdp_preview_options = {
       \ 'sequence_diagrams': {'theme': 'simple'}
       \ }
 
+Plug 'sebdah/vim-delve'
+
+Plug 'neovim/nvim-lspconfig'
+
 call plug#end()
 
+lua << EOF
+-- This still uses the old, deprecated syntax to configure the LSP. The newer
+-- vim.lsp.config syntax doesn't seem to work with the Terraform language
+-- server.
+require("lspconfig").terraformls.setup({
+    init_options = {
+      terraform = {
+        path = "/opt/homebrew/bin/terraform"
+      }
+    }
+})
+EOF
+
+" Fix for initial load in neovim  0.10.0
+" (https://github.com/NLKNguyen/papercolor-theme/issues/201)
+set notermguicolors
 colorscheme PaperColor

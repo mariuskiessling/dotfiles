@@ -5,13 +5,27 @@ end
 # Set language
 setenv LC_ALL en_US.UTF-8
 
+setenv PAGER "/usr/bin/less -S"
+
+setenv GOPRIVATE "go.cf.metro.cloud,github.com/metro-digital-inner-source"
+
 # Set aliases
 alias k='kubectl'
 alias ks='kubectl -n kube-system'
 alias gr='grep -R'
 alias tf='terraform'
+alias vpn='/Library/Application\ Support/Checkpoint/Endpoint\ Connect/trac'
 function ka
   kubectl $argv --all-namespaces
+end
+
+# Set abbreviations
+abbr cf 'cd ~/Projects/cf'
+abbr groot 'cd (git rev-parse --show-toplevel)'
+
+function espoke
+    cd ~/Projects/cf/metrocf-on-prem-connectivity/envs/prod/spokes/
+    nvim "configs/cf-on-prem-$argv.json"
 end
 
 # Setup up SSH agent
@@ -38,12 +52,11 @@ function test_identities
 end
 
 function load_identities
-  {{- if (eq .chezmoi.hostname "granger") }}
   ssh-add ~/.ssh/id_metro
   ssh-add ~/.ssh/id_metro_rsa
-  {{- end }}
 
   ssh-add ~/.ssh/id_personal
+  ssh-add ~/.ssh/id_personal_yubikey-5c-nano_2025
 end
 
 if [ -n "$SSH_AGENT_PID" ] 
@@ -109,3 +122,18 @@ set -gx GPG_TTY (tty)
 
 zoxide init fish | source
 direnv hook fish | source
+pyenv init - | source
+fish_add_path /opt/homebrew/opt/curl/bin
+fish_add_path /opt/homebrew/opt/ruby/bin
+fish_add_path /opt/homebrew/lib/ruby/gems/3.2.0/bin
+
+set -gx GOPATH $HOME/go; set -gx GOROOT $HOME/.go; set -gx PATH $GOPATH/bin $PATH; # g-install: do NOT edit, see https://github.com/stefanmaric/g
+
+# Created by `pipx` on 2024-09-01 15:39:51
+set PATH $PATH /Users/marius/.local/bin
+
+function last_locks -a start
+  set -l end (gdate -d "$start + 1 day" "+%Y-%m-%d")
+
+  log show --predicate 'process=="loginwindow" and logType=="default" and subsystem=="com.apple.loginwindow.logging" and category=="Standard" and eventMessage contains "_handleAppleEvent | Received a kAELockScreenEvent"' --start "$start" --end "$end" | grep -v "Timestamp" | awk '{print $1" "$2}'
+end

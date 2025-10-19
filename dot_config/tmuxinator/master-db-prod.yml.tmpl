@@ -1,3 +1,0 @@
-{{- if (eq .chezmoi.hostname "granger") -}}
-{{ joinPath .chezmoi.sourceDir "/dot_config/tmuxinator/.master-db-prod.yml.age" | include | decrypt }}
-{{- end -}}

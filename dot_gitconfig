@@ -5,13 +5,13 @@
 [user]
 	name = Marius Kießling
 	email = marius.kiessling@metro.digital
-	signingkey = 82DB518E
+	signingkey = 4E83865B
 [core]
 	ignorecase = true
-	editor = /usr/local/bin/nvim
-	sshCommand = /usr/local/bin/gitsis
+	editor = /opt/homebrew/bin/nvim
+	sshCommand = ssh
 [gpg]
-	program = /usr/local/bin/gpg
+	program = /opt/homebrew/bin/gpg
 [commit]
 	gpgsign = true
 [init]

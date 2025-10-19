@@ -6,14 +6,14 @@ yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 yabai -m config layout bsp
 
 # Mouse
-yabai -m config mouse_modifier ctrl
+yabai -m config mouse_modifier cmd
 
 # Spacing
-yabai -m config top_padding    15
-yabai -m config bottom_padding 15
-yabai -m config left_padding   15
-yabai -m config right_padding  15
-yabai -m config window_gap     15
+yabai -m config top_padding    10
+yabai -m config bottom_padding 10
+yabai -m config left_padding   10
+yabai -m config right_padding  10
+yabai -m config window_gap     10
 
 # Transparency
 # Window opacity has to be disabled until the bug in yabai for macOS Catalina
@@ -23,26 +23,29 @@ yabai -m config window_opacity off
 #yabai -m config normal_window_opacity 0.9
 
 # Window rules
+yabai -m rule --add app="Moonlight"              manage=off
 yabai -m rule --add app="^Finder$"               manage=off
 yabai -m rule --add app="^Fantastical$"          manage=off
 yabai -m rule --add app="^App Store$"            manage=off
 yabai -m rule --add app="^WhatsApp$"             manage=off grid=5:10:3:0:7:4
 yabai -m rule --add app="^Microsoft PowerPoint$" manage=off
-yabai -m rule --add app="^Microsoft Outlook$"    manage=off
-yabai -m rule --add app="^Microsoft Teams$"      manage=off grid=25:10:3:0:7:20
+yabai -m rule --add app="^Outlook$"    manage=off
+yabai -m rule --add app="^Microsoft Teams.*" manage=off grid=25:10:3:0:7:20
 yabai -m rule --add app="^Discord$"              manage=off grid=25:10:3:1:7:20
 yabai -m rule --add app="^Slack$"                manage=off grid=5:10:3:0:7:4
 yabai -m rule --add app="^Notion$"               manage=off
 yabai -m rule --add app="^yEd$"                  manage=off
 yabai -m rule --add app="^Alfred Preferences$"   manage=off
-yabai -m rule --add app="^Affinity Designer$"    manage=off
+yabai -m rule --add app="^Affinity Designer 2$"  manage=off
+yabai -m rule --add app="^Affinity Publisher 2$" manage=off
+yabai -m rule --add app="^Affinity Photo 2$"     manage=off
 yabai -m rule --add app="^Things$"               manage=off grid=5:2:0:0:0:3
 yabai -m rule --add app="^Spotify$"              manage=off grid=2:3:0:0:2:2
 yabai -m rule --add app="^Music$"                manage=off grid=2:3:0:0:2:2
 yabai -m rule --add app="^Nachrichten|Messages$" manage=off grid=5:2:3:0:7:3
 yabai -m rule --add app="^Signal$"               manage=off grid=5:2:3:0:7:3
 yabai -m rule --add app="^Airmail$"              manage=off
-yabai -m rule --add app="^Systemeinstellungen|System Preferences$"  manage=off
+yabai -m rule --add app="^System Settings$"      manage=off
 yabai -m rule --add app="^DBeaver"               manage=off
 yabai -m rule --add app="^MacPass$"              manage=off
 yabai -m rule --add title="^Quick Look$"         manage=off
@@ -54,6 +57,13 @@ yabai -m rule --add app="^Craft$"                manage=off
 yabai -m rule --add app="^Activity Monitor$"     manage=off
 yabai -m rule --add app="^Outbank$"              manage=off
 yabai -m rule --add app="^Tweetbot$"             manage=off
+yabai -m rule --add app="^EndpointConnect$"      manage=off
+yabai -m rule --add app="^1Password$"            manage=off
+yabai -m rule --add app="^Shottr$"               manage=off
+yabai -m rule --add app="^Outlook.*"             manage=off
+yabai -m rule --add app="^QuickRecorder.*"       manage=off
+yabai -m rule --add app="^Windows App$"          manage=off
+yabai -m rule --add app="^Amperfy$" title="MiniPlayer"          manage=off
 
 # The new version of the DisplayLink user agent spawns a technically visible
 # but practically invisible window that would take up tiling space if it were
